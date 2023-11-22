@@ -31,4 +31,14 @@ public class Cat {
 
     public Cat() {
     }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", weight=" + weight +
+                '}';
+    }
 }
