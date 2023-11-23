@@ -3,6 +3,8 @@ package com.apalyukha.restapi.controller;
 import com.apalyukha.restapi.dto.CatDTO;
 import com.apalyukha.restapi.entity.Cat;
 import com.apalyukha.restapi.repository.CatRepo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "main_methods")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -17,46 +20,21 @@ public class Controller {
 
     private final CatRepo catRepo;
 
-/*
-    @GetMapping("/api/main")
-    public String mainListener() {
-        return "Hello, Java Spring";
-    }
-
-    @GetMapping("/api/cat")
-    public String giveCat() {
-        Cat cat = new Cat("bob", 2, 3);
-
-        String jsonData = null;
-        try {
-            jsonData = objectMapper.writeValueAsString(cat);
-        } catch (JsonProcessingException e) {
-            System.out.println("Error with cat");
-        }
-        return jsonData;
-    }
-
-    @PostMapping("/api/special")
-    public String giveSpecialCat(@RequestParam String name) {
-        Cat cat = new Cat(name, 2, 3);
-
-        String jsonData = null;
-        try {
-            jsonData = objectMapper.writeValueAsString(cat);
-        } catch (JsonProcessingException e) {
-            System.out.println("Error with cat");
-        }
-        return jsonData;
-    }
-*/
-
+    @Operation(
+            summary = "Додає нового котика у базу",
+            description = "Получає DTO котика і білдером " +
+                    "збирає і зберігає сутність у базу"
+    )
     @PostMapping("/api/add")
     public void addCat(@RequestBody CatDTO catDTO) {
-        log.info("New row " + catRepo.save(Cat.builder()
-                .name(catDTO.getName())
-                .age(catDTO.getAge())
-                .weight(catDTO.getWeight())
-                .build()));
+        log.info(
+                "New row " + catRepo.save(
+                        Cat.builder()
+                                .name(catDTO.getName())
+                                .age(catDTO.getAge())
+                                .weight(catDTO.getWeight())
+                                .build())
+        );
     }
 
     @SneakyThrows
