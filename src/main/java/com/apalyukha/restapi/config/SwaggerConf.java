@@ -20,7 +20,7 @@ public class SwaggerConf {
                         )
                 )
                 .info(
-                     new Info().title("Our cats API")
+                        new Info().title("My cats API")
                 );
     }
 }
